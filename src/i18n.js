@@ -1,0 +1,226 @@
+// i18n.js — every word Starter Vault writes into a vault, in 5 languages (en · de · es · pt · ja).
+// Template bodies use Obsidian's core Templates placeholders ({{title}}, {{date}}, {{date:FORMAT}}) so the files in the
+// templates folder also work with the core Templates plugin; our own commands fill them in (engine.fill).
+// Frontmatter keys and status values stay English on purpose: they are read by code (reviews, archive), not by people.
+
+export const LANGS = ['en', 'de', 'es', 'pt', 'ja'];
+export const LANG_NAMES = { en: 'English', de: 'Deutsch', es: 'Español', pt: 'Português', ja: '日本語' };
+
+// [heading, [lines]] — '' = an empty line for writing
+const S = (h, ...lines) => [h, lines.length ? lines : ['']];
+const TODO = '- [ ] ';
+
+export const L = {
+  en: {
+    folders: { inbox: '0 Inbox', projects: '1 Projects', areas: '2 Areas', resources: '3 Resources', archive: '4 Archive', journal: '5 Journal', daily: '5 Journal/Daily', reviews: '5 Journal/Reviews', templates: '6 Templates' },
+    home: 'Home', start: 'Start here',
+    names: { daily: 'Daily note', project: 'Project', weekly: 'Weekly review', monthly: 'Monthly review', quarterly: 'Quarterly review', yearly: 'Yearly review', meeting: 'Meeting', person: 'Person', book: 'Book', area: 'Area', decision: 'Decision', goal: 'Goal' },
+    dailyTitle: 'dddd, D MMMM YYYY',
+    tpl: {
+      daily: [S('Top 3 today', TODO, TODO, TODO), S('Tasks', TODO), S('Notes'), S('End of day', '- Done today:', '- Moves to tomorrow:', '- One thing I learned:')],
+      project: [S('Outcome', 'What does "done" look like?', ''), S('Next actions', TODO), S('Notes'), S('Log', '- {{date:YYYY-MM-DD}} created')],
+      weekly: [S('Wins', '- '), S("What didn't go to plan", '- '), S('Inbox to zero', '- [ ] Inbox emptied', '- [ ] Every active project has a next action'), S('Next week', TODO, TODO, TODO)],
+      monthly: [S('Highlights of the month', '- '), S('What I learned', '- '), S('Areas check', '- Health:', '- Work:', '- Money:', '- People:'), S('Projects to start, pause or stop', '- '), S("Next month's 3 priorities", '1. ', '2. ', '3. ')],
+      quarterly: [S('Goals: where do I stand?', '- '), S('Finished projects', '- '), S('What to stop doing', '- '), S("Next quarter's goals", '1. ', '2. ', '3. ')],
+      yearly: [S('The year in one paragraph'), S('Best moments', '- '), S("What didn't work", '- '), S('Lessons', '- '), S("Next year's themes", '- ')],
+      meeting: [S('Agenda', '- '), S('Notes'), S('Decisions', '- '), S('Action items', TODO)],
+      person: [S('Context', 'How we met, what they work on:', ''), S('Notes'), S('Follow-ups', TODO)],
+      book: [S('Why I am reading it'), S('Key ideas', '- '), S('Quotes', '> '), S('What I will do differently', '- ')],
+      area: [S('Standard to keep'), S('Active projects', '- '), S('Recurring', TODO), S('Notes')],
+      decision: [S('Context'), S('Options', '1. ', '2. '), S('Decision'), S('Why'), S('Review on', '- [ ] Check this decision on: ')],
+      goal: [S('Why it matters'), S('How I will measure it'), S('Projects that move it', '- '), S('Milestones', TODO)],
+    },
+    startOutcome: 'This vault is set up and I use it every day.',
+    startTasks: ["Open today's daily note (calendar icon on the left, or the command \"Open today's daily note\")", 'Create your first real project with "New project"', 'Put one loose note into {inbox}, then move it into a project, area or resource', 'On Friday, run "Preview this week"'],
+    homeIntro: 'Your vault, sorted the PARA way: **Projects** have an end date, **Areas** are ongoing, **Resources** are reference, **Archive** is done.',
+    homeToday: 'Today', homeFolders: 'Folders', homeCommands: 'Commands (Ctrl/Cmd+P, type "Starter Vault")',
+    review: { weekly: 'Weekly review', monthly: 'Monthly review', quarterly: 'Quarterly review', numbers: 'Numbers', created: 'Notes created', changed: 'Notes changed', done: 'Tasks done', open: 'Open tasks in projects', noNext: 'Projects with no next action', stalled: 'Stalled projects (14+ days untouched)', inbox: 'Notes in the inbox', daily: 'Daily notes written', overdue: 'Overdue tasks', doneList: 'Done', openList: 'Open by project', noNextList: 'Needs a next action', stalledList: 'Stalled', createdList: 'Created', overdueList: 'Overdue', none: '— none', more: '… and {n} more', reflect: 'Your review' },
+    ui: {
+      cmdSetup: 'Set up my vault', cmdToday: "Open today's daily note", cmdProject: 'New project', cmdPreview: 'Preview this week', cmdWeekly: "Write this week's review", cmdMonthly: "Write this month's review", cmdQuarter: "Write this quarter's review", cmdArchive: 'Move finished projects to the archive', cmdTemplates: 'Add the 10 Pro templates', cmdPacks: 'Template packs', cmdKey: 'Enter licence key',
+      setupTitle: 'Set up your vault', setupIntro: 'Nothing is overwritten: what already exists is skipped.', isNew: 'new', isThere: 'already there — skipped', btnCreate: 'Create {n} items', created: 'Created {n}, skipped {m}.', lang: 'Language',
+      projectName: 'Project name', btnOk: 'Create',
+      proTitle: 'Starter Vault Pro', proLine1: 'Your weekly and monthly review written from your own vault: tasks done, open tasks per project, projects with no next action.', proLine2: 'Folders, templates and prompts in 5 languages, added to the vault you already have — nothing is overwritten.', clubLine: 'Packs club: one new template pack every month in 5 languages, installed from here. Your notes stay if you stop.', btnPro: 'Get Pro — $39 once', btnClub: 'Packs club — $6/month', btnYear: 'or $59/year', haveKey: 'I have a key',
+      keyTitle: 'Licence key', keyPh: 'Paste the key from your Whop receipt', keyOk: 'Key accepted: {tier}.', keyBad: 'This key was not accepted.', keyOffline: 'Could not reach getreadystack.com. Try again.', btnCheck: 'Check key', btnRemove: 'Remove key',
+      packsTitle: 'Template packs', packsIntro: 'One new pack each month, in 5 languages.', btnInstall: 'Install', packDone: 'Installed {n} files, skipped {m}.', packsNeedClub: 'Packs come with the Packs club.', packsFail: 'Could not load the pack list.',
+      previewTitle: 'This week so far', reviewDone: 'Review written: {path}', archiveNone: 'No finished project (status: done) found.', archiveTitle: 'Finished projects', btnMove: 'Move {n} to {path}', archiveDone: 'Moved {n} projects.', rolled: 'Rolled over {n} open tasks from {date}.', templatesDone: 'Added {n} templates, skipped {m}.', proOnly: 'This is a Pro feature.',
+      sLang: 'Language for new notes', sLangDesc: 'Folder names, headings and prompts.', sFolders: 'Folders in use', sRerun: 'Run setup again', sKey: 'Licence', sStatus: 'Status: {tier}', sNetwork: 'Network: only the licence check and the pack list and download go to getreadystack.com. No telemetry.',
+      tier: { free: 'Free', pro: 'Pro', club: 'Packs club', year: 'Packs club (yearly)' },
+    },
+    doneWords: ['done', 'complete', 'completed', 'finished'],
+  },
+
+  de: {
+    folders: { inbox: '0 Eingang', projects: '1 Projekte', areas: '2 Bereiche', resources: '3 Ressourcen', archive: '4 Archiv', journal: '5 Journal', daily: '5 Journal/Täglich', reviews: '5 Journal/Rückblicke', templates: '6 Vorlagen' },
+    home: 'Start', start: 'Hier anfangen',
+    names: { daily: 'Tagesnotiz', project: 'Projekt', weekly: 'Wochenrückblick', monthly: 'Monatsrückblick', quarterly: 'Quartalsrückblick', yearly: 'Jahresrückblick', meeting: 'Besprechung', person: 'Person', book: 'Buch', area: 'Bereich', decision: 'Entscheidung', goal: 'Ziel' },
+    dailyTitle: 'dddd, D. MMMM YYYY',
+    tpl: {
+      daily: [S('Die 3 wichtigsten heute', TODO, TODO, TODO), S('Aufgaben', TODO), S('Notizen'), S('Tagesabschluss', '- Heute erledigt:', '- Wandert auf morgen:', '- Das habe ich gelernt:')],
+      project: [S('Ergebnis', 'Woran erkenne ich, dass es fertig ist?', ''), S('Nächste Schritte', TODO), S('Notizen'), S('Verlauf', '- {{date:YYYY-MM-DD}} angelegt')],
+      weekly: [S('Erfolge', '- '), S('Was nicht nach Plan lief', '- '), S('Eingang leeren', '- [ ] Eingang ist leer', '- [ ] Jedes aktive Projekt hat einen nächsten Schritt'), S('Nächste Woche', TODO, TODO, TODO)],
+      monthly: [S('Höhepunkte des Monats', '- '), S('Was ich gelernt habe', '- '), S('Bereiche prüfen', '- Gesundheit:', '- Arbeit:', '- Finanzen:', '- Menschen:'), S('Projekte starten, pausieren oder beenden', '- '), S('Die 3 Prioritäten für nächsten Monat', '1. ', '2. ', '3. ')],
+      quarterly: [S('Ziele: Wo stehe ich?', '- '), S('Abgeschlossene Projekte', '- '), S('Was ich nicht mehr tue', '- '), S('Ziele für das nächste Quartal', '1. ', '2. ', '3. ')],
+      yearly: [S('Das Jahr in einem Absatz'), S('Die besten Momente', '- '), S('Was nicht funktioniert hat', '- '), S('Lektionen', '- '), S('Themen für das nächste Jahr', '- ')],
+      meeting: [S('Tagesordnung', '- '), S('Notizen'), S('Entscheidungen', '- '), S('Aufgaben', TODO)],
+      person: [S('Kontext', 'Woher wir uns kennen, woran die Person arbeitet:', ''), S('Notizen'), S('Nachfassen', TODO)],
+      book: [S('Warum ich es lese'), S('Kernideen', '- '), S('Zitate', '> '), S('Was ich anders machen werde', '- ')],
+      area: [S('Standard, den ich halte'), S('Aktive Projekte', '- '), S('Wiederkehrend', TODO), S('Notizen')],
+      decision: [S('Kontext'), S('Optionen', '1. ', '2. '), S('Entscheidung'), S('Begründung'), S('Überprüfen am', '- [ ] Entscheidung prüfen am: ')],
+      goal: [S('Warum es wichtig ist'), S('Wie ich es messe'), S('Projekte, die es voranbringen', '- '), S('Meilensteine', TODO)],
+    },
+    startOutcome: 'Dieser Tresor ist eingerichtet und ich nutze ihn täglich.',
+    startTasks: ['Heutige Tagesnotiz öffnen (Kalendersymbol links oder Befehl „Heutige Tagesnotiz öffnen“)', 'Das erste echte Projekt mit „Neues Projekt“ anlegen', 'Eine lose Notiz in {inbox} legen und dann einem Projekt, Bereich oder einer Ressource zuordnen', 'Am Freitag „Diese Woche ansehen“ ausführen'],
+    homeIntro: 'Dein Tresor nach PARA sortiert: **Projekte** haben ein Ende, **Bereiche** laufen dauerhaft, **Ressourcen** sind Nachschlagewissen, das **Archiv** ist erledigt.',
+    homeToday: 'Heute', homeFolders: 'Ordner', homeCommands: 'Befehle (Strg/Cmd+P, „Starter Vault“ tippen)',
+    review: { weekly: 'Wochenrückblick', monthly: 'Monatsrückblick', quarterly: 'Quartalsrückblick', numbers: 'Zahlen', created: 'Neue Notizen', changed: 'Geänderte Notizen', done: 'Erledigte Aufgaben', open: 'Offene Aufgaben in Projekten', noNext: 'Projekte ohne nächsten Schritt', stalled: 'Stillstehende Projekte (14+ Tage unberührt)', inbox: 'Notizen im Eingang', daily: 'Geschriebene Tagesnotizen', overdue: 'Überfällige Aufgaben', doneList: 'Erledigt', openList: 'Offen nach Projekt', noNextList: 'Braucht einen nächsten Schritt', stalledList: 'Stillstand', createdList: 'Neu angelegt', overdueList: 'Überfällig', none: '— keine', more: '… und {n} weitere', reflect: 'Dein Rückblick' },
+    ui: {
+      cmdSetup: 'Meinen Tresor einrichten', cmdToday: 'Heutige Tagesnotiz öffnen', cmdProject: 'Neues Projekt', cmdPreview: 'Diese Woche ansehen', cmdWeekly: 'Wochenrückblick schreiben', cmdMonthly: 'Monatsrückblick schreiben', cmdQuarter: 'Quartalsrückblick schreiben', cmdArchive: 'Abgeschlossene Projekte ins Archiv verschieben', cmdTemplates: 'Die 10 Pro-Vorlagen hinzufügen', cmdPacks: 'Vorlagenpakete', cmdKey: 'Lizenzschlüssel eingeben',
+      setupTitle: 'Tresor einrichten', setupIntro: 'Nichts wird überschrieben: Was schon da ist, wird übersprungen.', isNew: 'neu', isThere: 'schon da — übersprungen', btnCreate: '{n} Elemente anlegen', created: '{n} angelegt, {m} übersprungen.', lang: 'Sprache',
+      projectName: 'Projektname', btnOk: 'Anlegen',
+      proTitle: 'Starter Vault Pro', proLine1: 'Dein Wochen- und Monatsrückblick aus deinem eigenen Tresor: erledigte Aufgaben, offene Aufgaben je Projekt, Projekte ohne nächsten Schritt.', proLine2: 'Ordner, Vorlagen und Fragen in 5 Sprachen, in deinen bestehenden Tresor eingefügt — nichts wird überschrieben.', clubLine: 'Paket-Club: jeden Monat ein neues Vorlagenpaket in 5 Sprachen, hier installiert. Deine Notizen bleiben, wenn du aufhörst.', btnPro: 'Pro holen — 39 $ einmalig', btnClub: 'Paket-Club — 6 $/Monat', btnYear: 'oder 59 $/Jahr', haveKey: 'Ich habe einen Schlüssel',
+      keyTitle: 'Lizenzschlüssel', keyPh: 'Schlüssel aus deinem Whop-Beleg einfügen', keyOk: 'Schlüssel angenommen: {tier}.', keyBad: 'Dieser Schlüssel wurde nicht angenommen.', keyOffline: 'getreadystack.com nicht erreichbar. Bitte erneut versuchen.', btnCheck: 'Schlüssel prüfen', btnRemove: 'Schlüssel entfernen',
+      packsTitle: 'Vorlagenpakete', packsIntro: 'Jeden Monat ein neues Paket, in 5 Sprachen.', btnInstall: 'Installieren', packDone: '{n} Dateien installiert, {m} übersprungen.', packsNeedClub: 'Pakete gibt es im Paket-Club.', packsFail: 'Paketliste konnte nicht geladen werden.',
+      previewTitle: 'Diese Woche bisher', reviewDone: 'Rückblick geschrieben: {path}', archiveNone: 'Kein abgeschlossenes Projekt (status: done) gefunden.', archiveTitle: 'Abgeschlossene Projekte', btnMove: '{n} nach {path} verschieben', archiveDone: '{n} Projekte verschoben.', rolled: '{n} offene Aufgaben vom {date} übernommen.', templatesDone: '{n} Vorlagen hinzugefügt, {m} übersprungen.', proOnly: 'Das ist eine Pro-Funktion.',
+      sLang: 'Sprache für neue Notizen', sLangDesc: 'Ordnernamen, Überschriften und Fragen.', sFolders: 'Verwendete Ordner', sRerun: 'Einrichtung erneut ausführen', sKey: 'Lizenz', sStatus: 'Status: {tier}', sNetwork: 'Netzwerk: Nur die Lizenzprüfung sowie Paketliste und -download gehen an getreadystack.com. Keine Telemetrie.',
+      tier: { free: 'Kostenlos', pro: 'Pro', club: 'Paket-Club', year: 'Paket-Club (jährlich)' },
+    },
+    doneWords: ['done', 'complete', 'completed', 'finished', 'erledigt', 'abgeschlossen', 'fertig'],
+  },
+
+  es: {
+    folders: { inbox: '0 Bandeja de entrada', projects: '1 Proyectos', areas: '2 Áreas', resources: '3 Recursos', archive: '4 Archivo', journal: '5 Diario', daily: '5 Diario/Días', reviews: '5 Diario/Revisiones', templates: '6 Plantillas' },
+    home: 'Inicio', start: 'Empieza aquí',
+    names: { daily: 'Nota diaria', project: 'Proyecto', weekly: 'Revisión semanal', monthly: 'Revisión mensual', quarterly: 'Revisión trimestral', yearly: 'Revisión anual', meeting: 'Reunión', person: 'Persona', book: 'Libro', area: 'Área', decision: 'Decisión', goal: 'Objetivo' },
+    dailyTitle: 'dddd, D [de] MMMM [de] YYYY',
+    tpl: {
+      daily: [S('Las 3 de hoy', TODO, TODO, TODO), S('Tareas', TODO), S('Notas'), S('Cierre del día', '- Hecho hoy:', '- Pasa a mañana:', '- Algo que aprendí:')],
+      project: [S('Resultado', '¿Cómo sé que está terminado?', ''), S('Próximas acciones', TODO), S('Notas'), S('Registro', '- {{date:YYYY-MM-DD}} creado')],
+      weekly: [S('Logros', '- '), S('Lo que no salió según el plan', '- '), S('Bandeja a cero', '- [ ] Bandeja vacía', '- [ ] Cada proyecto activo tiene una próxima acción'), S('La próxima semana', TODO, TODO, TODO)],
+      monthly: [S('Lo mejor del mes', '- '), S('Lo que aprendí', '- '), S('Revisión de áreas', '- Salud:', '- Trabajo:', '- Dinero:', '- Personas:'), S('Proyectos que empezar, pausar o cerrar', '- '), S('Las 3 prioridades del próximo mes', '1. ', '2. ', '3. ')],
+      quarterly: [S('Objetivos: ¿dónde estoy?', '- '), S('Proyectos terminados', '- '), S('Qué dejar de hacer', '- '), S('Objetivos del próximo trimestre', '1. ', '2. ', '3. ')],
+      yearly: [S('El año en un párrafo'), S('Los mejores momentos', '- '), S('Lo que no funcionó', '- '), S('Lecciones', '- '), S('Temas del próximo año', '- ')],
+      meeting: [S('Orden del día', '- '), S('Notas'), S('Decisiones', '- '), S('Tareas', TODO)],
+      person: [S('Contexto', 'Cómo nos conocimos y en qué trabaja:', ''), S('Notas'), S('Seguimiento', TODO)],
+      book: [S('Por qué lo leo'), S('Ideas clave', '- '), S('Citas', '> '), S('Qué haré distinto', '- ')],
+      area: [S('Estándar que mantengo'), S('Proyectos activos', '- '), S('Recurrente', TODO), S('Notas')],
+      decision: [S('Contexto'), S('Opciones', '1. ', '2. '), S('Decisión'), S('Por qué'), S('Revisar el', '- [ ] Revisar esta decisión el: ')],
+      goal: [S('Por qué importa'), S('Cómo lo mido'), S('Proyectos que lo impulsan', '- '), S('Hitos', TODO)],
+    },
+    startOutcome: 'Esta bóveda está lista y la uso cada día.',
+    startTasks: ['Abrir la nota diaria de hoy (icono de calendario a la izquierda o comando «Abrir la nota diaria de hoy»)', 'Crear tu primer proyecto real con «Nuevo proyecto»', 'Poner una nota suelta en {inbox} y luego moverla a un proyecto, área o recurso', 'El viernes, ejecutar «Ver esta semana»'],
+    homeIntro: 'Tu bóveda ordenada con PARA: los **Proyectos** terminan, las **Áreas** son continuas, los **Recursos** son consulta y el **Archivo** es lo terminado.',
+    homeToday: 'Hoy', homeFolders: 'Carpetas', homeCommands: 'Comandos (Ctrl/Cmd+P, escribe «Starter Vault»)',
+    review: { weekly: 'Revisión semanal', monthly: 'Revisión mensual', quarterly: 'Revisión trimestral', numbers: 'Cifras', created: 'Notas creadas', changed: 'Notas modificadas', done: 'Tareas hechas', open: 'Tareas abiertas en proyectos', noNext: 'Proyectos sin próxima acción', stalled: 'Proyectos parados (14+ días sin tocar)', inbox: 'Notas en la bandeja', daily: 'Notas diarias escritas', overdue: 'Tareas vencidas', doneList: 'Hecho', openList: 'Abiertas por proyecto', noNextList: 'Necesita una próxima acción', stalledList: 'Parados', createdList: 'Creadas', overdueList: 'Vencidas', none: '— ninguna', more: '… y {n} más', reflect: 'Tu revisión' },
+    ui: {
+      cmdSetup: 'Configurar mi bóveda', cmdToday: 'Abrir la nota diaria de hoy', cmdProject: 'Nuevo proyecto', cmdPreview: 'Ver esta semana', cmdWeekly: 'Escribir la revisión de esta semana', cmdMonthly: 'Escribir la revisión de este mes', cmdQuarter: 'Escribir la revisión del trimestre', cmdArchive: 'Mover los proyectos terminados al archivo', cmdTemplates: 'Añadir las 10 plantillas Pro', cmdPacks: 'Paquetes de plantillas', cmdKey: 'Introducir la clave de licencia',
+      setupTitle: 'Configura tu bóveda', setupIntro: 'No se sobrescribe nada: lo que ya existe se omite.', isNew: 'nuevo', isThere: 'ya existe — se omite', btnCreate: 'Crear {n} elementos', created: '{n} creados, {m} omitidos.', lang: 'Idioma',
+      projectName: 'Nombre del proyecto', btnOk: 'Crear',
+      proTitle: 'Starter Vault Pro', proLine1: 'Tu revisión semanal y mensual escrita a partir de tu propia bóveda: tareas hechas, tareas abiertas por proyecto, proyectos sin próxima acción.', proLine2: 'Carpetas, plantillas y preguntas en 5 idiomas, añadidas a la bóveda que ya tienes — no se sobrescribe nada.', clubLine: 'Club de paquetes: un paquete nuevo de plantillas cada mes en 5 idiomas, instalado desde aquí. Tus notas se quedan si lo dejas.', btnPro: 'Obtener Pro — 39 $ una vez', btnClub: 'Club de paquetes — 6 $/mes', btnYear: 'o 59 $/año', haveKey: 'Tengo una clave',
+      keyTitle: 'Clave de licencia', keyPh: 'Pega la clave de tu recibo de Whop', keyOk: 'Clave aceptada: {tier}.', keyBad: 'Esta clave no se ha aceptado.', keyOffline: 'No se pudo conectar con getreadystack.com. Inténtalo de nuevo.', btnCheck: 'Comprobar clave', btnRemove: 'Quitar clave',
+      packsTitle: 'Paquetes de plantillas', packsIntro: 'Un paquete nuevo cada mes, en 5 idiomas.', btnInstall: 'Instalar', packDone: '{n} archivos instalados, {m} omitidos.', packsNeedClub: 'Los paquetes vienen con el Club de paquetes.', packsFail: 'No se pudo cargar la lista de paquetes.',
+      previewTitle: 'Esta semana hasta ahora', reviewDone: 'Revisión escrita: {path}', archiveNone: 'No hay proyectos terminados (status: done).', archiveTitle: 'Proyectos terminados', btnMove: 'Mover {n} a {path}', archiveDone: '{n} proyectos movidos.', rolled: '{n} tareas abiertas traídas del {date}.', templatesDone: '{n} plantillas añadidas, {m} omitidas.', proOnly: 'Esta función es de Pro.',
+      sLang: 'Idioma de las notas nuevas', sLangDesc: 'Nombres de carpetas, títulos y preguntas.', sFolders: 'Carpetas en uso', sRerun: 'Volver a configurar', sKey: 'Licencia', sStatus: 'Estado: {tier}', sNetwork: 'Red: solo la comprobación de licencia y la lista y descarga de paquetes van a getreadystack.com. Sin telemetría.',
+      tier: { free: 'Gratis', pro: 'Pro', club: 'Club de paquetes', year: 'Club de paquetes (anual)' },
+    },
+    doneWords: ['done', 'complete', 'completed', 'finished', 'terminado', 'hecho', 'completado'],
+  },
+
+  pt: {
+    folders: { inbox: '0 Caixa de entrada', projects: '1 Projetos', areas: '2 Áreas', resources: '3 Recursos', archive: '4 Arquivo', journal: '5 Diário', daily: '5 Diário/Dias', reviews: '5 Diário/Revisões', templates: '6 Modelos' },
+    home: 'Início', start: 'Comece aqui',
+    names: { daily: 'Nota diária', project: 'Projeto', weekly: 'Revisão semanal', monthly: 'Revisão mensal', quarterly: 'Revisão trimestral', yearly: 'Revisão anual', meeting: 'Reunião', person: 'Pessoa', book: 'Livro', area: 'Área', decision: 'Decisão', goal: 'Meta' },
+    dailyTitle: 'dddd, D [de] MMMM [de] YYYY',
+    tpl: {
+      daily: [S('As 3 de hoje', TODO, TODO, TODO), S('Tarefas', TODO), S('Notas'), S('Fechamento do dia', '- Feito hoje:', '- Passa para amanhã:', '- Algo que aprendi:')],
+      project: [S('Resultado', 'Como sei que está pronto?', ''), S('Próximas ações', TODO), S('Notas'), S('Registro', '- {{date:YYYY-MM-DD}} criado')],
+      weekly: [S('Conquistas', '- '), S('O que não saiu como planejado', '- '), S('Caixa de entrada zerada', '- [ ] Caixa de entrada vazia', '- [ ] Todo projeto ativo tem uma próxima ação'), S('Próxima semana', TODO, TODO, TODO)],
+      monthly: [S('Destaques do mês', '- '), S('O que aprendi', '- '), S('Revisão das áreas', '- Saúde:', '- Trabalho:', '- Dinheiro:', '- Pessoas:'), S('Projetos para começar, pausar ou encerrar', '- '), S('As 3 prioridades do próximo mês', '1. ', '2. ', '3. ')],
+      quarterly: [S('Metas: onde estou?', '- '), S('Projetos concluídos', '- '), S('O que parar de fazer', '- '), S('Metas do próximo trimestre', '1. ', '2. ', '3. ')],
+      yearly: [S('O ano em um parágrafo'), S('Melhores momentos', '- '), S('O que não funcionou', '- '), S('Lições', '- '), S('Temas do próximo ano', '- ')],
+      meeting: [S('Pauta', '- '), S('Notas'), S('Decisões', '- '), S('Tarefas', TODO)],
+      person: [S('Contexto', 'Como nos conhecemos e no que trabalha:', ''), S('Notas'), S('Acompanhamento', TODO)],
+      book: [S('Por que estou lendo'), S('Ideias principais', '- '), S('Citações', '> '), S('O que vou fazer diferente', '- ')],
+      area: [S('Padrão que mantenho'), S('Projetos ativos', '- '), S('Recorrente', TODO), S('Notas')],
+      decision: [S('Contexto'), S('Opções', '1. ', '2. '), S('Decisão'), S('Por quê'), S('Revisar em', '- [ ] Revisar esta decisão em: ')],
+      goal: [S('Por que importa'), S('Como vou medir'), S('Projetos que a movem', '- '), S('Marcos', TODO)],
+    },
+    startOutcome: 'Este cofre está pronto e eu uso todos os dias.',
+    startTasks: ['Abrir a nota diária de hoje (ícone de calendário à esquerda ou comando "Abrir a nota diária de hoje")', 'Criar seu primeiro projeto real com "Novo projeto"', 'Colocar uma nota solta em {inbox} e depois movê-la para um projeto, área ou recurso', 'Na sexta-feira, rodar "Ver esta semana"'],
+    homeIntro: 'Seu cofre organizado pelo PARA: **Projetos** têm fim, **Áreas** são contínuas, **Recursos** são consulta e o **Arquivo** é o que terminou.',
+    homeToday: 'Hoje', homeFolders: 'Pastas', homeCommands: 'Comandos (Ctrl/Cmd+P, digite "Starter Vault")',
+    review: { weekly: 'Revisão semanal', monthly: 'Revisão mensal', quarterly: 'Revisão trimestral', numbers: 'Números', created: 'Notas criadas', changed: 'Notas alteradas', done: 'Tarefas feitas', open: 'Tarefas abertas nos projetos', noNext: 'Projetos sem próxima ação', stalled: 'Projetos parados (14+ dias sem mexer)', inbox: 'Notas na caixa de entrada', daily: 'Notas diárias escritas', overdue: 'Tarefas atrasadas', doneList: 'Feito', openList: 'Abertas por projeto', noNextList: 'Precisa de uma próxima ação', stalledList: 'Parados', createdList: 'Criadas', overdueList: 'Atrasadas', none: '— nenhuma', more: '… e mais {n}', reflect: 'Sua revisão' },
+    ui: {
+      cmdSetup: 'Configurar meu cofre', cmdToday: 'Abrir a nota diária de hoje', cmdProject: 'Novo projeto', cmdPreview: 'Ver esta semana', cmdWeekly: 'Escrever a revisão desta semana', cmdMonthly: 'Escrever a revisão deste mês', cmdQuarter: 'Escrever a revisão do trimestre', cmdArchive: 'Mover os projetos concluídos para o arquivo', cmdTemplates: 'Adicionar os 10 modelos Pro', cmdPacks: 'Pacotes de modelos', cmdKey: 'Inserir a chave de licença',
+      setupTitle: 'Configure seu cofre', setupIntro: 'Nada é sobrescrito: o que já existe é pulado.', isNew: 'novo', isThere: 'já existe — pulado', btnCreate: 'Criar {n} itens', created: '{n} criados, {m} pulados.', lang: 'Idioma',
+      projectName: 'Nome do projeto', btnOk: 'Criar',
+      proTitle: 'Starter Vault Pro', proLine1: 'Sua revisão semanal e mensal escrita a partir do seu próprio cofre: tarefas feitas, tarefas abertas por projeto, projetos sem próxima ação.', proLine2: 'Pastas, modelos e perguntas em 5 idiomas, adicionados ao cofre que você já tem — nada é sobrescrito.', clubLine: 'Clube de pacotes: um pacote novo de modelos todo mês em 5 idiomas, instalado daqui. Suas notas ficam se você parar.', btnPro: 'Obter Pro — US$ 39 uma vez', btnClub: 'Clube de pacotes — US$ 6/mês', btnYear: 'ou US$ 59/ano', haveKey: 'Tenho uma chave',
+      keyTitle: 'Chave de licença', keyPh: 'Cole a chave do seu recibo da Whop', keyOk: 'Chave aceita: {tier}.', keyBad: 'Esta chave não foi aceita.', keyOffline: 'Não foi possível acessar getreadystack.com. Tente de novo.', btnCheck: 'Verificar chave', btnRemove: 'Remover chave',
+      packsTitle: 'Pacotes de modelos', packsIntro: 'Um pacote novo todo mês, em 5 idiomas.', btnInstall: 'Instalar', packDone: '{n} arquivos instalados, {m} pulados.', packsNeedClub: 'Os pacotes vêm com o Clube de pacotes.', packsFail: 'Não foi possível carregar a lista de pacotes.',
+      previewTitle: 'Esta semana até agora', reviewDone: 'Revisão escrita: {path}', archiveNone: 'Nenhum projeto concluído (status: done) encontrado.', archiveTitle: 'Projetos concluídos', btnMove: 'Mover {n} para {path}', archiveDone: '{n} projetos movidos.', rolled: '{n} tarefas abertas trazidas de {date}.', templatesDone: '{n} modelos adicionados, {m} pulados.', proOnly: 'Este recurso é do Pro.',
+      sLang: 'Idioma das notas novas', sLangDesc: 'Nomes de pastas, títulos e perguntas.', sFolders: 'Pastas em uso', sRerun: 'Configurar de novo', sKey: 'Licença', sStatus: 'Status: {tier}', sNetwork: 'Rede: só a verificação da licença e a lista e o download dos pacotes vão para getreadystack.com. Sem telemetria.',
+      tier: { free: 'Grátis', pro: 'Pro', club: 'Clube de pacotes', year: 'Clube de pacotes (anual)' },
+    },
+    doneWords: ['done', 'complete', 'completed', 'finished', 'concluído', 'concluido', 'feito', 'pronto'],
+  },
+
+  ja: {
+    folders: { inbox: '0 受信箱', projects: '1 プロジェクト', areas: '2 エリア', resources: '3 リソース', archive: '4 アーカイブ', journal: '5 ジャーナル', daily: '5 ジャーナル/デイリー', reviews: '5 ジャーナル/振り返り', templates: '6 テンプレート' },
+    home: 'ホーム', start: 'はじめに',
+    names: { daily: 'デイリーノート', project: 'プロジェクト', weekly: '週次レビュー', monthly: '月次レビュー', quarterly: '四半期レビュー', yearly: '年次レビュー', meeting: '会議', person: '人物', book: '本', area: 'エリア', decision: '意思決定', goal: '目標' },
+    dailyTitle: 'YYYY年M月D日 (ddd)',
+    tpl: {
+      daily: [S('今日の3つ', TODO, TODO, TODO), S('タスク', TODO), S('メモ'), S('一日の終わりに', '- 今日やったこと:', '- 明日に回すこと:', '- 今日学んだこと:')],
+      project: [S('成果', '「完了」とはどんな状態?', ''), S('次のアクション', TODO), S('メモ'), S('ログ', '- {{date:YYYY-MM-DD}} 作成')],
+      weekly: [S('できたこと', '- '), S('計画どおりにいかなかったこと', '- '), S('受信箱をゼロに', '- [ ] 受信箱が空', '- [ ] 進行中のすべてのプロジェクトに次のアクションがある'), S('来週', TODO, TODO, TODO)],
+      monthly: [S('今月のハイライト', '- '), S('学んだこと', '- '), S('エリアの点検', '- 健康:', '- 仕事:', '- お金:', '- 人間関係:'), S('始める・一時停止する・やめるプロジェクト', '- '), S('来月の優先事項3つ', '1. ', '2. ', '3. ')],
+      quarterly: [S('目標の進み具合', '- '), S('完了したプロジェクト', '- '), S('やめること', '- '), S('来四半期の目標', '1. ', '2. ', '3. ')],
+      yearly: [S('一年をひと言で'), S('最高の瞬間', '- '), S('うまくいかなかったこと', '- '), S('教訓', '- '), S('来年のテーマ', '- ')],
+      meeting: [S('議題', '- '), S('メモ'), S('決定事項', '- '), S('アクションアイテム', TODO)],
+      person: [S('背景', '出会ったきっかけ・取り組んでいること:', ''), S('メモ'), S('フォローアップ', TODO)],
+      book: [S('読む理由'), S('重要なアイデア', '- '), S('引用', '> '), S('これから変えること', '- ')],
+      area: [S('保ちたい基準'), S('進行中のプロジェクト', '- '), S('定期タスク', TODO), S('メモ')],
+      decision: [S('背景'), S('選択肢', '1. ', '2. '), S('決定'), S('理由'), S('見直し日', '- [ ] この決定を見直す日: ')],
+      goal: [S('なぜ大切か'), S('どう測るか'), S('前に進めるプロジェクト', '- '), S('マイルストーン', TODO)],
+    },
+    startOutcome: 'この保管庫が整い、毎日使っている。',
+    startTasks: ['今日のデイリーノートを開く(左のカレンダーアイコン、またはコマンド「今日のデイリーノートを開く」)', '「新しいプロジェクト」で最初の本物のプロジェクトを作る', '散らばったメモを1つ「{inbox}」に入れ、プロジェクト・エリア・リソースのどれかに移す', '金曜日に「今週を見る」を実行する'],
+    homeIntro: 'PARAで整理した保管庫: **プロジェクト**は終わりがあるもの、**エリア**は続くもの、**リソース**は参考資料、**アーカイブ**は終わったもの。',
+    homeToday: '今日', homeFolders: 'フォルダ', homeCommands: 'コマンド(Ctrl/Cmd+P で「Starter Vault」と入力)',
+    review: { weekly: '週次レビュー', monthly: '月次レビュー', quarterly: '四半期レビュー', numbers: '数字', created: '作成したノート', changed: '更新したノート', done: '完了したタスク', open: 'プロジェクトの未完了タスク', noNext: '次のアクションがないプロジェクト', stalled: '止まっているプロジェクト(14日以上未更新)', inbox: '受信箱のノート', daily: '書いたデイリーノート', overdue: '期限切れのタスク', doneList: '完了', openList: 'プロジェクト別の未完了', noNextList: '次のアクションが必要', stalledList: '停滞', createdList: '作成', overdueList: '期限切れ', none: '— なし', more: '… ほか{n}件', reflect: '振り返り' },
+    ui: {
+      cmdSetup: '保管庫をセットアップ', cmdToday: '今日のデイリーノートを開く', cmdProject: '新しいプロジェクト', cmdPreview: '今週を見る', cmdWeekly: '今週のレビューを書く', cmdMonthly: '今月のレビューを書く', cmdQuarter: '今四半期のレビューを書く', cmdArchive: '完了したプロジェクトをアーカイブへ移動', cmdTemplates: 'Pro テンプレート10種を追加', cmdPacks: 'テンプレートパック', cmdKey: 'ライセンスキーを入力',
+      setupTitle: '保管庫をセットアップ', setupIntro: '上書きはしません。すでにあるものはスキップします。', isNew: '新規', isThere: 'すでにあり — スキップ', btnCreate: '{n}件を作成', created: '{n}件作成、{m}件スキップ。', lang: '言語',
+      projectName: 'プロジェクト名', btnOk: '作成',
+      proTitle: 'Starter Vault Pro', proLine1: 'あなたの保管庫から週次・月次レビューを自動で書きます: 完了したタスク、プロジェクト別の未完了タスク、次のアクションがないプロジェクト。', proLine2: 'フォルダ・テンプレート・問いかけを5言語で、今の保管庫に追加 — 何も上書きしません。', clubLine: 'パッククラブ: 毎月新しいテンプレートパックを5言語で、ここからインストール。やめてもノートは残ります。', btnPro: 'Pro を入手 — 39ドル(買い切り)', btnClub: 'パッククラブ — 月6ドル', btnYear: 'または年59ドル', haveKey: 'キーを持っています',
+      keyTitle: 'ライセンスキー', keyPh: 'Whop の領収書にあるキーを貼り付け', keyOk: 'キーを確認しました: {tier}。', keyBad: 'このキーは受け付けられませんでした。', keyOffline: 'getreadystack.com に接続できません。もう一度お試しください。', btnCheck: 'キーを確認', btnRemove: 'キーを削除',
+      packsTitle: 'テンプレートパック', packsIntro: '毎月新しいパック、5言語。', btnInstall: 'インストール', packDone: '{n}ファイルをインストール、{m}件スキップ。', packsNeedClub: 'パックはパッククラブに含まれます。', packsFail: 'パック一覧を読み込めませんでした。',
+      previewTitle: '今週ここまで', reviewDone: 'レビューを書きました: {path}', archiveNone: '完了したプロジェクト(status: done)はありません。', archiveTitle: '完了したプロジェクト', btnMove: '{n}件を {path} へ移動', archiveDone: '{n}件のプロジェクトを移動しました。', rolled: '{date} の未完了タスク{n}件を引き継ぎました。', templatesDone: 'テンプレート{n}件を追加、{m}件スキップ。', proOnly: 'これは Pro の機能です。',
+      sLang: '新しいノートの言語', sLangDesc: 'フォルダ名・見出し・問いかけ。', sFolders: '使用中のフォルダ', sRerun: 'セットアップをもう一度', sKey: 'ライセンス', sStatus: '状態: {tier}', sNetwork: '通信: ライセンス確認とパック一覧・ダウンロードだけが getreadystack.com に送られます。テレメトリーはありません。',
+      tier: { free: '無料', pro: 'Pro', club: 'パッククラブ', year: 'パッククラブ(年額)' },
+    },
+    doneWords: ['done', 'complete', 'completed', 'finished', '完了', '済み', '終了'],
+  },
+};
+
+export const FREE_TEMPLATES = ['daily', 'project'];
+export const PRO_TEMPLATES = ['weekly', 'monthly', 'quarterly', 'yearly', 'meeting', 'person', 'book', 'area', 'decision', 'goal'];
+// frontmatter per template type (values are code-readable on purpose)
+export const FM = {
+  daily: { type: 'daily', date: '{{date:YYYY-MM-DD}}' },
+  project: { type: 'project', status: 'active', area: '', created: '{{date:YYYY-MM-DD}}', due: '' },
+  weekly: { type: 'weekly-review', date: '{{date:YYYY-MM-DD}}' },
+  monthly: { type: 'monthly-review', date: '{{date:YYYY-MM-DD}}' },
+  quarterly: { type: 'quarterly-review', date: '{{date:YYYY-MM-DD}}' },
+  yearly: { type: 'yearly-review', date: '{{date:YYYY-MM-DD}}' },
+  meeting: { type: 'meeting', date: '{{date:YYYY-MM-DD}}', attendees: '' },
+  person: { type: 'person', company: '', role: '', email: '' },
+  book: { type: 'book', author: '', status: 'reading', started: '{{date:YYYY-MM-DD}}', finished: '' },
+  area: { type: 'area' },
+  decision: { type: 'decision', date: '{{date:YYYY-MM-DD}}', status: 'decided' },
+  goal: { type: 'goal', status: 'active', due: '' },
+};
+
+export function pickLang(code) {
+  const c = String(code || '').toLowerCase().slice(0, 2);
+  return LANGS.includes(c) ? c : 'en';
+}

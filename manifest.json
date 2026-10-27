@@ -1,0 +1,10 @@
+{
+  "id": "starter-vault",
+  "name": "Starter Vault",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Set up PARA folders, a daily note and project notes in your current vault in one click, in English, German, Spanish, Portuguese or Japanese. Nothing is overwritten.",
+  "author": "ReadyStack",
+  "authorUrl": "https://getreadystack.com/apps/obsidian-starter-vault-plugin/",
+  "isDesktopOnly": false
+}

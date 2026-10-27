@@ -1,0 +1,16 @@
+{
+  "name": "starter-vault",
+  "version": "1.0.0",
+  "description": "Starter Vault: PARA, daily note, projects and computed weekly/monthly reviews in 5 languages.",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "test": "node --test test/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "0.25.10",
+    "obsidian": "latest"
+  }
+}
